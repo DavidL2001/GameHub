@@ -2,16 +2,7 @@
   "name": "gamehub",
   "version": "1.0.0",
   "description": "",
-  "main": "src/index.js",
-  "dependencies": {
-    "bcrypt": "^6.0.0",
-    "cors": "^2.8.6",
-    "dotenv": "^17.3.1",
-    "express": "^5.2.1",
-    "jsonwebtoken": "^9.0.3",
-    "mongoose": "^9.2.4",
-    "mysql2": "^3.19.0"
-  },
+  "main": "index.js",
   "scripts": {
     "dev": "ts-node-dev --respawn src/server.ts"
   },
@@ -27,8 +18,16 @@
     "url": "https://github.com/DavidL2001/GameHub/issues"
   },
   "homepage": "https://github.com/DavidL2001/GameHub#readme",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cors": "^2.8.6",
+    "dotenv": "^17.3.1",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.2.4",
+    "mysql2": "^3.19.0"
+  },
   "devDependencies": {
-    "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
     "@types/node": "^25.3.5",
     "ts-node-dev": "^2.0.0",
