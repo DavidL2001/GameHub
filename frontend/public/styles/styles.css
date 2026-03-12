@@ -1,0 +1,78 @@
+/* Navbaren */
+.gamehub-navbar {
+  background: linear-gradient(90deg, #061a3a, #0b2a5a);
+  padding: 12px 30px;
+  border-bottom: 2px solid #ff8c00;
+}
+
+
+.gamehub-navbar .navbar-brand img {
+  height: 45px;
+}
+
+
+.gamehub-navbar .nav-link {
+  color: #ff8c00;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+
+
+.gamehub-navbar .nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -5px;
+  width: 0%;
+  height: 2px;
+  background: #ff8c00;
+  transition: width 0.3s ease;
+}
+
+.gamehub-navbar .nav-link:hover::after {
+  width: 100%;
+}
+
+
+
+.gamehub-navbar .navbar-toggler {
+  border-color: #ff8c00;
+}
+
+.gamehub-navbar .navbar-toggler-icon {
+  filter: invert(70%) sepia(80%) saturate(500%) hue-rotate(350deg);
+}
+
+
+.gamehub-navbar {
+  padding-top: 14px;
+  padding-bottom: 14px;
+}
+
+
+.gamehub-navbar .navbar-brand img {
+  height: 50px;
+}
+
+
+
+@media (max-width: 991px) {
+
+  .gamehub-navbar {
+    padding-top: 18px;
+    padding-bottom: 18px;
+  }
+
+  .gamehub-navbar .navbar-brand img {
+    height: 150px;
+    width: auto;
+  }
+   .navbar-toggler-icon {
+     width: 80px;
+    height: 60px;
+  }
+
+}
