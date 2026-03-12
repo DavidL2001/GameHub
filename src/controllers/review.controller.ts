@@ -56,7 +56,6 @@ export const getReviewsByGame = async (req: Request, res: Response) => {
   try {
     const gameId = Number(req.params.id);
     const reviews = await reviewService.getReviewsByGameId(gameId);
-
     res.json(reviews);
   } catch (error) {
     res.status(500).json({ message: "Failed to fetch reviews for this game" });
