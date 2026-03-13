@@ -1,0 +1,14 @@
+import { Router } from "express";
+import * as scoreController from "../controllers/score.controller";
+
+const router = Router();
+
+//Mini CRUD till Scores/Leaderboard
+router.post("/", scoreController.createScore);
+router.get("/", scoreController.getAllScores);
+router.get("/leaderboard/:gameId", scoreController.getLeaderboard);
+router.delete("/:id", scoreController.deleteScore);
+
+export default router;
+
+//Alla dessa testade i Insomnia och funkar som det ska
