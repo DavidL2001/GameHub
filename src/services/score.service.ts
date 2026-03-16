@@ -1,17 +1,18 @@
 import pool from "../config/mysql";
 
-//1. Lägg till ett score till användare & spel
+//1. Lägg till ett score till användare & spel (secured)
 export const createScore = async (
-  user_id: number,
-  game_id: number,
+  userId: number,
+  gameId: number,
   score: number
 ) => {
   const [result] = await pool.query(
-    "INSERT INTO scores (user_id, game_id, score) VALUES (?, ?, ?)",
-    [user_id, game_id, score]
+    `INSERT INTO scores (user_id, game_id, score)
+     VALUES (?, ?, ?)`,
+    [userId, gameId, score]
   );
   return result;
-}
+};
 
 //2. Hämta alla scores
 export const getAllScores = async () => {

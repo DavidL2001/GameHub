@@ -1,10 +1,11 @@
 import { Router } from "express";
 import * as scoreController from "../controllers/score.controller";
+import { authenticateToken } from "../middleware/auth.middleware";
 
 const router = Router();
 
 //Mini CRUD till Scores/Leaderboard
-router.post("/", scoreController.createScore);
+router.post("/", authenticateToken, scoreController.createScore);
 router.get("/", scoreController.getAllScores);
 router.get("/leaderboard/:gameId", scoreController.getLeaderboard);
 router.delete("/:id", scoreController.deleteScore);
