@@ -67,13 +67,202 @@
   }
 
   .gamehub-navbar .navbar-brand img {
-    height: 150px;
+    height: 50px;
     width: auto;
   }
-   .navbar-toggler-icon {
-     width: 80px;
-    height: 60px;
-  }
+
+}
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+background:#17386d;
+color:white;
+}
+/* contact sida */
+header{
+background:#17386d;
+padding:20px 10%;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.logo{
+font-size:26px;
+font-weight:bold;
+color:#ff8c00;
+}
+
+nav a{
+color:white;
+text-decoration:none;
+margin-left:25px;
+font-size:15px;
+transition:0.3s;
+}
+
+nav a:hover{
+color:#ff8c00;
+}
+
+.hero{
+text-align:center;
+padding:70px 20px;
+}
+
+.hero h1{
+font-size:42px;
+margin-bottom:10px;
+}
+
+.hero p{
+color:#cfd6e6;
+}
+
+/* CONTACT SECTION */
+
+.contact-container{
+max-width:1100px;
+margin:auto;
+padding:60px 20px;
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:40px;
+}
+
+
+.contact-info{
+background:#0b2a5a;
+padding:35px;
+border-radius:12px;
+}
+
+.contact-info h2{
+margin-bottom:20px;
+color:#ff8c00;
+}
+
+.contact-info p{
+margin:12px 0;
+color:#d6deef;
+}
+
+
+.contact-form{
+background:#0b2a5a;
+padding:35px;
+border-radius:12px;
+}
+
+.contact-form h2{
+margin-bottom:20px;
+color:#ff8c00;
+}
+
+.form-group{
+margin-bottom:18px;
+}
+
+.form-group input,
+.form-group textarea{
+width:100%;
+padding:12px;
+border:none;
+border-radius:6px;
+background:#061a3a;
+color:white;
+}
+
+.form-group textarea{
+height:120px;
+resize:none;
+}
+
+button{
+background:#ff8c00;
+color:white;
+border:none;
+padding:12px 25px;
+border-radius:6px;
+font-size:16px;
+cursor:pointer;
+transition:0.3s;
+}
+
+button:hover{
+background:#e67800;
+}
+
+.contact-container{
+max-width:1100px;
+margin:auto;
+padding:40px 16px;
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:30px;
+}
+@media (max-width:768px){
+
+.contact-container{
+grid-template-columns:1fr;
+padding:30px 16px;
+gap:20px;
+}
+
+.contact-info,
+.contact-form{
+padding:25px;
+}
+
+.form-group input,
+.form-group textarea{
+font-size:16px;
+}
+
+
+
+}
+.about-container{
+max-width:1100px;
+margin:auto;
+padding:60px 20px;
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:40px;
+}
+
+.about-box{
+background:#0b2a5a;
+padding:35px;
+border-radius:12px;
+}
+
+.about-box h2{
+margin-bottom:20px;
+color:#ff8c00;
+}
+
+.about-box p{
+margin:12px 0;
+color:#d6deef;
+}
+
+@media (max-width:768px){
+
+.about-container{
+grid-template-columns:1fr;
+padding:30px 16px;
+gap:20px;
+}
+
+.about-box{
+padding:25px;
+}
 
 }
 
