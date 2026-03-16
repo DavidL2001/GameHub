@@ -6,13 +6,22 @@ interface ReviewParams {
   id: string;
 }
 
-//1
+//1. Secured - Måste vara inloggad för att skapa en review
 export const createReview = async (req: Request, res: Response) => {
   try {
-    const review = await reviewService.createReview(req.body);
+    const userId = (req as any).user.id;
+    const { game_id, rating, comment } = req.body;
+    const review = await reviewService.createReview(
+      userId,
+      game_id,
+      rating,
+      comment
+    );
     res.status(201).json(review);
   } catch (error) {
-    res.status(500).json({ message: "Failed to create review" });
+    res.status(500).json({
+      message: "Failed to create review"
+    });
   }
 };
 //2. 
@@ -56,7 +65,6 @@ export const getReviewsByGame = async (req: Request, res: Response) => {
   try {
     const gameId = Number(req.params.id);
     const reviews = await reviewService.getReviewsByGameId(gameId);
-
     res.json(reviews);
   } catch (error) {
     res.status(500).json({ message: "Failed to fetch reviews for this game" });

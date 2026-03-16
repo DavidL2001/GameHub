@@ -265,3 +265,91 @@ padding:25px;
 }
 
 }
+
+
+/* Footer */
+  
+/* Orangea linjen ovanför footern */
+.page-divider {
+  border: none;
+  height: 2px;
+  background: #ff8c00; 
+  margin: 0;
+}
+
+/* Bakgrundsfärg + textfärg för hela footern */
+footer {
+  background: #0a0e27; 
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* Rubriker i footern */
+footer h6 {
+  color: #ffffff;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+/* text i footern */
+footer p {
+  margin: 0.5rem 0;
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Länkarna */
+footer .footer-link {
+  color: rgba(255, 255, 255, 0.75);
+  text-decoration: none;
+  transition: color 0.25s ease;
+  position: relative; 
+}
+
+/* Hover-effekt */
+footer .footer-link:hover {
+  color: #ffffff;
+}
+
+/* linje som dras ut vid hover */
+footer .footer-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  width: 0%;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.5);
+  transition: width 0.3s ease;
+}
+
+footer .footer-link:hover::after {
+  width: 100%;
+}
+
+/* Linje mellan innehåll och copyright */
+footer hr {
+  border: none;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.5);
+  margin: 2rem 0;
+}
+
+/* Sociala ikoner */
+footer .footer-icon {
+  color: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 0.5rem;
+  transition: all 0.25s ease;
+}
+
+footer .footer-icon:hover {
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* Copyright-texten - färgsätts fel, se över sen*/
+footer section p {
+  color: rgba(255, 255, 255, 0.1z);
+  font-size: 0.9rem;
+}
