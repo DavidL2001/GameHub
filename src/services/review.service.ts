@@ -1,8 +1,18 @@
 import Review, { IReview } from "../models/review.model";
 
-//1. Skapa en review
-export const createReview = async (data: Partial<IReview>) => {
-  const review = new Review(data);
+//1. Skapa en review (secured)
+export const createReview = async (
+  userId: number,
+  gameId: number,
+  rating: number,
+  comment: string
+) => {
+  const review = new Review({
+    userId,
+    gameId,
+    rating,
+    comment
+  });
   return await review.save();
 };
 

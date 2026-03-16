@@ -1,14 +1,22 @@
 import { Request, Response } from "express";
 import * as scoreService from "../services/score.service";
 
-//1.
+//1. Secured - Måste vara inloggad för att kunna spara score
 export const createScore = async (req: Request, res: Response) => {
   try {
-    const { user_id, game_id, score } = req.body;
-    const result = await scoreService.createScore(user_id, game_id, score);
+    const userId = (req as any).user.id;
+    const { game_id, score } = req.body;
+    const result = await scoreService.createScore(
+      userId,
+      game_id,
+      score
+    );
     res.status(201).json(result);
   } catch (error) {
-    res.status(500).json({ message: "Failed to create score" });
+    res.status(500).json({
+      message: "Failed to create score"
+    });
+
   }
 };
 //2.

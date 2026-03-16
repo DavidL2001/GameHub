@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import { connectMongo } from "./config/mongo";
 import reviewRoutes from "./routes/review.routes";
 import gameRoutes from "./routes/game.routes";
+import authRoutes from "./routes/auth.routes"
 
 dotenv.config();
 
@@ -14,6 +15,7 @@ app.use(cors());
 app.use(express.json());
 app.use("/reviews", reviewRoutes);
 app.use("/games", gameRoutes);
+app.use("/auth", authRoutes)
 
 app.get("/", (req, res) => {
   res.send("GameHub API running");
