@@ -9,9 +9,25 @@
     <link rel="stylesheet" href="./styles/styles.css">
 </head>
 <body>
-    <div id="navbar"></div>
+    <div id="navbar"></div>    
+    <main class="game-container">
+      <h1>Tre i Rad</h1>
+      <p id="status">Spelare X är på tur</p>
+      
+      <div class="board" id="board">
+        <div class="cell" onclick="makeMove(0)"></div>
+        <div class="cell" onclick="makeMove(1)"></div>
+        <div class="cell" onclick="makeMove(2)"></div>
+        <div class="cell" onclick="makeMove(3)"></div>
+        <div class="cell" onclick="makeMove(4)"></div>
+        <div class="cell" onclick="makeMove(5)"></div>
+        <div class="cell" onclick="makeMove(6)"></div>
+        <div class="cell" onclick="makeMove(7)"></div>
+        <div class="cell" onclick="makeMove(8)"></div>
+      </div>
 
-    <h1>Home Page</h1>
+      <button type="button" class="reset-button" onclick="resetGame()">Starta om</button>
+    </main>
 
 <!-- Footer -->
 <hr class="page-divider">

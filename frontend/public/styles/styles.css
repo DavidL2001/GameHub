@@ -266,7 +266,113 @@ padding:25px;
 
 }
 
+/* Tre i rad */
 
+/* Wrapper för spelet */
+.game-container {
+  width: 90%;
+  max-width: 520px;
+  margin: 30px auto;
+  padding: 20px 15px;
+  background: #0b2a5a;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Rubrik */
+.game-container h1 {
+  text-align: center;
+  color: white;
+  margin-bottom: 10px;
+  font-size: 2rem;
+}
+
+/* Status-text */
+#status {
+  text-align: center;
+  font-size: 1.1em;
+  color: white;
+  margin-bottom: 18px;
+  font-weight: bold;
+}
+
+/* Spelbrädet */
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  padding: 12px;
+  margin-bottom: 18px;
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 8px;
+}
+
+/* Varje ruta */
+.cell {
+  width: 100%;
+  aspect-ratio: 1;
+  background: #17386d;
+  border: 2px solid #e67e00;
+  border-radius: 6px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2.2em;
+  font-weight: bold;
+  color: #e67e00;
+  cursor: pointer;
+  user-select: none;
+}
+
+.cell:hover {
+  background: #1a4080;
+}
+
+.cell:active {
+  transform: scale(0.98);
+}
+
+/* Reset-knapp */
+.reset-button {
+  width: 100%;
+  padding: 12px;
+  background: #e67e00;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1em;
+  cursor: pointer;
+}
+
+.reset-button:hover {
+  background: #cc7000;
+}
+
+/* Mobil */
+@media (max-width: 480px) {
+  .game-container {
+    width: 92%;
+    margin: 20px auto;
+    padding: 16px 12px;
+  }
+
+  .game-container h1 {
+    font-size: 1.8rem;
+  }
+
+  #status {
+    font-size: 1rem;
+  }
+
+  .board {
+    gap: 6px;
+    padding: 10px;
+  }
+
+  .cell {
+    font-size: 2em;
+  }
+}
 /* Footer */
   
 /* Orangea linjen ovanför footern */
