@@ -1,7 +1,8 @@
 import { Request, Response } from "express";
 import * as reviewService from "../services/review.service";
+import { AuthRequest } from "../types/authRequest";
 
-//Definerar req.params.id - "!" (non null assertion operator) funkade inte
+//Definerar req.params.id 
 interface ReviewParams {
   id: string;
 }
@@ -9,7 +10,7 @@ interface ReviewParams {
 //1. Secured - Måste vara inloggad för att skapa en review
 export const createReview = async (req: Request, res: Response) => {
   try {
-    const userId = (req as any).user.id;
+    const userId = (req as AuthRequest).user.id;
     const { game_id, rating, comment } = req.body;
     const review = await reviewService.createReview(
       userId,

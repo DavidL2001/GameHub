@@ -2,7 +2,7 @@ import pool from "../config/mysql";
 import bcrypt from "bcrypt";
 import { RowDataPacket } from "mysql2";
 
-//För att undvika att ha 'any', så gör jag ett interface som berättar till TS vad för värden den ska förvänta sig
+//För att undvika att ha 'any', så gör jag ett interface som berättar till TS vad för värden den ska förvänta sig via vår MySQL DB
 interface User extends RowDataPacket {
   id: number;
   username: string;
