@@ -83,6 +83,67 @@ body{
 background:#17386d;
 color:white;
 }
+
+
+/*Homepage*/
+.games-container{
+max-width:1100px;
+margin:auto;
+padding:60px 20px;
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:30px;
+}
+
+.game-card{
+background:#0b2a5a;
+padding:20px;
+border-radius:12px;
+text-align:center;
+}
+
+.game-card img{
+width:180px;
+height:180px;
+object-fit:cover;
+border-radius:10px;
+margin-bottom:15px;
+}
+
+.game-card h2{
+margin-bottom:15px;
+color:#ff8c00;
+}
+
+.game-card a{
+display:inline-block;
+background:#ff8c00;
+color:white;
+padding:10px 20px;
+border-radius:6px;
+text-decoration:none;
+transition:0.3s;
+}
+
+.game-card a:hover{
+background:#e67800;
+}
+
+/* homepage MOBILE */
+
+@media (max-width:768px){
+
+.games-container{
+grid-template-columns:1fr;
+padding:30px 16px;
+}
+
+.hero h1{
+font-size:30px;
+}
+
+}
+
 /* contact sida */
 header{
 background:#17386d;
@@ -374,18 +435,18 @@ padding:25px;
   }
 }
 /* Footer */
-  
+
 /* Orangea linjen ovanför footern */
 .page-divider {
   border: none;
   height: 2px;
-  background: #ff8c00; 
+  background: #ff8c00;
   margin: 0;
 }
 
 /* Bakgrundsfärg + textfärg för hela footern */
 footer {
-  background: #0a0e27; 
+  background: #0a0e27;
   color: rgba(255, 255, 255, 0.85);
 }
 
@@ -408,7 +469,7 @@ footer .footer-link {
   color: rgba(255, 255, 255, 0.75);
   text-decoration: none;
   transition: color 0.25s ease;
-  position: relative; 
+  position: relative;
 }
 
 /* Hover-effekt */
