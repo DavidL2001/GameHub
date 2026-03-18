@@ -13,6 +13,7 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use(express.static("public"));
 app.use("/reviews", reviewRoutes);
 app.use("/games", gameRoutes);
 app.use("/auth", authRoutes)
