@@ -63,7 +63,7 @@ form.addEventListener("submit", async (e) => {
       if (isLogin) {
         // Korrekt inloggning, skickar användaren vidare till deras Dashboard
         localStorage.setItem("token", data.token);
-        window.location.href = "dashboard.html";
+        window.location.href = "/dashboard.html";
       } else {
         // Korrekt registrering
         errorMessage.style.color = "green";
