@@ -27,20 +27,27 @@ function updateStatus() {
 
   // Visa tur eller att spelet är slut
   statusEl.innerText = gameActive
-    ? `Spelare ${currentPlayer} är på tur`
-    : `Spelet är slut`;
+    ? `Player ${currentPlayer}'s turn`
+    : `The game is over`;
 }
 
 function makeMove(cellIndex) {
   // Går inte att spela när spelet är slut eller rutan är upptagen
   if (!gameActive || board[cellIndex] !== "") return;
 
+  if (!board.includes("")) {
+    statusEl.innerText = "Draw!";
+    gameActive = false;
+    logScore(0); // Logga 0 poäng vid oavgjort
+    return;
+  }
+
   board[cellIndex] = currentPlayer;
   document.getElementsByClassName("cell")[cellIndex].innerText = currentPlayer;
 
   // Kolla om vinsten är uppfylld
   if (checkResult()) {
-    statusEl.innerText = `Spelet är slut`;
+    statusEl.innerText = `The game is over`;
     gameActive = false;
     return;
   }
@@ -61,6 +68,9 @@ function checkResult() {
   for (const [a, b, c] of winningConditions) {
     // Alla tre rutor samma symbol = vinst
     if (board[a] && board[a] === board[b] && board[a] === board[c]) {
+      statusEl.innerText = `Player ${currentPlayer} wins!`
+      gameActive = false;
+      logScore(1);
       return true;
     }
   }
@@ -75,6 +85,41 @@ function resetGame() {
   // Rensa rutorna i HTML
   document.querySelectorAll(".cell").forEach((cell) => (cell.textContent = ""));
   updateStatus();
+}
+
+
+async function logScore(score) {
+  // Hämta user info från localStorage 
+  const userId = localStorage.getItem("userId");
+  const gameId = 1; 
+
+  if (!userId) {
+    console.log("User not logged in - score not saved");
+    return;
+  }
+
+  try {
+    const response = await fetch("http://localhost:3000/scores", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${localStorage.getItem("token")}`
+      },
+      body: JSON.stringify({
+        user_id: userId,
+        game_id: gameId,
+        score: score
+      })
+    });
+
+    if (response.ok) {
+      console.log("Score saved!");
+    } else {
+      console.error("Failed to save score");
+    }
+  } catch (error) {
+    console.error("Error:", error);
+  }
 }
 
 // Startstatus direkt vid laddning
