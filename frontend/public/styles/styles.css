@@ -1,3 +1,17 @@
+html, body {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1;
+}
+
 /* Navbaren */
 .gamehub-navbar {
   background: linear-gradient(90deg, #061a3a, #0b2a5a);
@@ -520,3 +534,127 @@ footer section p {
   color: rgba(255, 255, 255, 0.1z);
   font-size: 0.9rem;
 }
+
+
+
+
+/* Container för hela leaderboard-sektionen */
+.leaderboard-container {
+  padding: 20px 40px;
+  background: #0b2a5a;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+
+/* Rubrik för leaderboard */
+.leaderboard-container h1 {
+  text-align: center;
+  color: #ff8c00;
+  margin-bottom: 30px;
+  font-size: 2.2rem;
+}
+
+/* Sektionen för att välja spel */
+.game-selector {
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.game-selector label {
+  margin-right: 15px;
+  font-weight: bold;
+  color: white;
+  font-size: 1.1rem;
+}
+
+.game-selector select {
+  padding: 10px 15px;
+  border: 2px solid #ff8c00;
+  background: #061a3a;
+  color: white;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.game-selector select:hover {
+  background: #0d3060;
+}
+
+.game-selector select:focus {
+  outline: none;
+  border-color: #ffaa33;
+}
+
+/* Sektionen för leaderboard-tabellen */
+.leaderboard-section {
+  margin-top: 20px;
+}
+
+/* Tabellen själv */
+#leaderboardTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background: #061a3a;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* Tabellhuvud */
+#leaderboardTable thead {
+  background: linear-gradient(90deg, #ff8c00, #ffaa33);
+  color: white;
+}
+
+#leaderboardTable th {
+  padding: 15px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.05rem;
+}
+
+/* Tabellrader */
+#leaderboardTable td {
+  padding: 12px 15px;
+  text-align: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  color: #d6deef;
+}
+
+/* Färg på rader för bättre läsbarhet */
+#leaderboardTable tbody tr:nth-child(even) {
+  background: rgba(255, 140, 0, 0.05);
+}
+
+/* Hover-effekt på rader */
+#leaderboardTable tbody tr:hover {
+  background: rgba(255, 140, 0, 0.15);
+  transition: 0.2s;
+}
+
+/* Mobil-responsiv */
+@media (max-width: 768px) {
+  .leaderboard-container {
+    margin: 20px auto;
+    padding: 15px;
+  }
+
+  .leaderboard-container h1 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+  }
+
+  .game-selector {
+    margin-bottom: 20px;
+  }
+
+  #leaderboardTable th,
+  #leaderboardTable td {
+    padding: 10px 8px;
+    font-size: 0.95rem;
+  }
+}
+
