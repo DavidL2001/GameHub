@@ -520,3 +520,93 @@ footer section p {
   color: rgba(255, 255, 255, 0.1z);
   font-size: 0.9rem;
 }
+
+/* login / register */
+
+#auth-section{
+background:#061a3a;
+color:white;
+font-family:Arial, Helvetica, sans-serif;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+margin:0;
+}
+
+#auth-container{
+background:#0b2a5a;
+padding:40px;
+border-radius:12px;
+width:100%;
+max-width:400px;
+text-align:center;
+box-shadow:0 10px 25px rgba(0,0,0,0.3);
+}
+
+#auth-container h2{
+color:#ff8c00;
+margin-bottom:25px;
+}
+
+#auth-container input{
+width:100%;
+padding:12px;
+margin-bottom:15px;
+border:none;
+border-radius:6px;
+background:#061a3a;
+color:white;
+font-size:14px;
+}
+
+#auth-container input::placeholder{
+color:#cfd6e6;
+}
+
+#submitBtn{
+width:100%;
+background:#ff8c00;
+color:white;
+border:none;
+padding:12px;
+border-radius:6px;
+font-size:16px;
+cursor:pointer;
+transition:0.3s;
+}
+
+#submitBtn:hover{
+background:#e67800;
+}
+
+
+#toggleMode{
+background:none;
+border:none;
+color:#ff8c00;
+cursor:pointer;
+margin-left:5px;
+font-size:14px;
+}
+
+#toggleMode:hover{
+text-decoration:underline;
+}
+
+
+#errorMessage{
+margin-top:10px;
+font-size:14px;
+}
+
+/* LOG/REG MOBILE */
+
+@media (max-width:500px){
+
+#auth-container{
+margin:0 15px;
+padding:30px 20px;
+}
+
+}
