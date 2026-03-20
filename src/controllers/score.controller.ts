@@ -29,7 +29,19 @@ export const getAllScores = async (req: Request, res: Response) => {
     res.status(500).json({ message: "Failed to fetch scores" });
   }
 };
-//3.
+//3. Secured - Denna är till Dashboard, egna stats så man måste vara inloggad
+export const getMyScores = async (req: Request, res: Response) => {
+  try {
+    const userId = (req as AuthRequest).user.id;
+    const scores = await scoreService.getScoresByUser(userId);
+    res.json(scores);
+  } catch (error) {
+    res.status(500).json({
+      message: "Failed to fetch user scores"
+    });
+  }
+};
+//4.
 export const getLeaderboard = async (req: Request, res: Response) => {
   try {
     const gameId = Number(req.params.gameId);
@@ -39,7 +51,7 @@ export const getLeaderboard = async (req: Request, res: Response) => {
     res.status(500).json({ message: "Failed to fetch leaderboard" });
   }
 };
-//4.
+//5.
 export const deleteScore = async (req: Request, res: Response) => {
   try {
     const id = Number(req.params.id);

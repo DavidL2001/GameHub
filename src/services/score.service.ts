@@ -17,10 +17,29 @@ export const createScore = async (
 //2. Hämta alla scores
 export const getAllScores = async () => {
   const [rows] = await pool.query("SELECT * FROM scores");
-  return rows;
+  return rows || [];
 };
 
-//3. Hämta leaderboard (Topp 10) för ett spel
+//3. Hämta score till Dashboard (JOIN)
+export const getScoresByUser = async (userId: number) => {
+  const [rows] = await pool.query(
+  `
+  SELECT 
+    scores.id,
+    scores.score,
+    scores.played_at,
+    games.name AS game_name
+  FROM scores
+  JOIN games ON scores.game_id = games.id
+  WHERE scores.user_id = ?
+  ORDER BY scores.played_at DESC
+  `,
+  [userId]
+);
+  return rows || [];
+};
+
+//4. Hämta leaderboard (Topp 10) för ett spel
 export const getLeaderboardByGame = async (gameId: number) => {
   const [rows] = await pool.query(
     `
@@ -33,10 +52,10 @@ export const getLeaderboardByGame = async (gameId: number) => {
     `,
     [gameId]
   );
-  return rows;
+  return rows || [];
 };
 
-//4. Ta bort ett score (mest för admin inte användare)
+//5. Ta bort ett score (mest för admin inte användare)
 export const deleteScore = async (id: number) => {
   const [result] = await pool.query(
     "DELETE FROM scores WHERE id = ?",

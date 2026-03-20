@@ -2,7 +2,7 @@ import pool from "../config/mysql";
 import bcrypt from "bcrypt";
 import { RowDataPacket } from "mysql2";
 
-//För att undvika att ha 'any', så gör jag ett interface som berättar till TS vad för värden den ska förvänta sig via vår MySQL DB
+//Interface som berättar till TS vad den ska förvänta sig
 interface User extends RowDataPacket {
   id: number;
   username: string;
@@ -47,4 +47,13 @@ export const loginUser = async (email: string, password: string) => {
   }
   const { password_hash, ...safeUser } = user;
   return safeUser;
+};
+
+//3. Dashboard info
+export const getUserById = async (id: number) => {
+  const [rows] = await pool.query(
+    "SELECT id, username, email FROM users WHERE id = ?",
+    [id]
+  );
+  return (rows as any)[0];
 };
