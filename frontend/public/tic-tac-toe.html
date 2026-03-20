@@ -9,47 +9,25 @@
     <link rel="stylesheet" href="./styles/styles.css">
 </head>
 <body>
-    <div id="navbar"></div>
+    <div id="navbar"></div>    
+    <main class="game-container">
+      <h1>Tic Tac Toe</h1>
+      <p id="status">Player X's turn</p>
+      
+      <div class="board" id="board">
+        <div class="cell" onclick="makeMove(0)"></div>
+        <div class="cell" onclick="makeMove(1)"></div>
+        <div class="cell" onclick="makeMove(2)"></div>
+        <div class="cell" onclick="makeMove(3)"></div>
+        <div class="cell" onclick="makeMove(4)"></div>
+        <div class="cell" onclick="makeMove(5)"></div>
+        <div class="cell" onclick="makeMove(6)"></div>
+        <div class="cell" onclick="makeMove(7)"></div>
+        <div class="cell" onclick="makeMove(8)"></div>
+      </div>
 
-    <section class="hero">
-<h1>Welcome to GameHub</h1>
-
-<p>Choose a game and start playing!</p>
-</section>
-
-<section class="games-container">
-
-<div class="game-card">
-
-<img src="assets/icons/tictactoe.jpg" alt="Tic Tac Toe">
-<h2>Tic Tac Toe</h2>
-<a href="tic-tac-toe.html">Play</a>
-</div>
-
-
-<div class="game-card">
-<img src="assets/icons/rps.jpg" alt="Rock Paper Scissors">
-<h2>Rock Paper Scissors</h2>
-<a href="#">Play</a>
-</div>
-
-<div class="game-card">
-<img src="assets/icons/dice.jpg" alt="Dice Game">
-<h2>Dice Game</h2>
-<a href="#">Play</a>
-
-</div>
-
-
-<div class="game-card">
-<img src="assets/icons/numberquess.jpg" alt="Number Guessing Game">
-<h2>Number Guessing Game</h2>
-
-<a href="#">Play</a>
-</div>
-
-</section>
-
+      <button type="button" class="reset-button" onclick="resetGame()">Restart Game</button>
+    </main>
 
 <!-- Footer -->
 <hr class="page-divider">
@@ -231,7 +209,7 @@
 
           <a
 
-
+          
              class="btn btn-outline-light btn-floating m-1 footer-icon"
              role="button"
              >

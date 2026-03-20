@@ -7,6 +7,7 @@ const router = Router();
 //Mini CRUD till Scores/Leaderboard
 router.post("/", authenticateToken, scoreController.createScore);
 router.get("/", scoreController.getAllScores);
+router.get("/my", authenticateToken, scoreController.getMyScores); //till Dashboard
 router.get("/leaderboard/:gameId", scoreController.getLeaderboard);
 router.delete("/:id", scoreController.deleteScore);
 

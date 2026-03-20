@@ -1,3 +1,17 @@
+html, body {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1;
+}
+
 /* Navbaren */
 .gamehub-navbar {
   background: linear-gradient(90deg, #061a3a, #0b2a5a);
@@ -83,6 +97,67 @@ body{
 background:#17386d;
 color:white;
 }
+
+
+/*Homepage*/
+.games-container{
+max-width:1100px;
+margin:auto;
+padding:60px 20px;
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:30px;
+}
+
+.game-card{
+background:#0b2a5a;
+padding:20px;
+border-radius:12px;
+text-align:center;
+}
+
+.game-card img{
+width:180px;
+height:180px;
+object-fit:cover;
+border-radius:10px;
+margin-bottom:15px;
+}
+
+.game-card h2{
+margin-bottom:15px;
+color:#ff8c00;
+}
+
+.game-card a{
+display:inline-block;
+background:#ff8c00;
+color:white;
+padding:10px 20px;
+border-radius:6px;
+text-decoration:none;
+transition:0.3s;
+}
+
+.game-card a:hover{
+background:#e67800;
+}
+
+/* homepage MOBILE */
+
+@media (max-width:768px){
+
+.games-container{
+grid-template-columns:1fr;
+padding:30px 16px;
+}
+
+.hero h1{
+font-size:30px;
+}
+
+}
+
 /* contact sida */
 header{
 background:#17386d;
@@ -266,20 +341,126 @@ padding:25px;
 
 }
 
+/* Tre i rad */
 
+/* Wrapper för spelet */
+.game-container {
+  width: 90%;
+  max-width: 520px;
+  margin: 30px auto;
+  padding: 20px 15px;
+  background: #0b2a5a;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Rubrik */
+.game-container h1 {
+  text-align: center;
+  color: white;
+  margin-bottom: 10px;
+  font-size: 2rem;
+}
+
+/* Status-text */
+#status {
+  text-align: center;
+  font-size: 1.1em;
+  color: white;
+  margin-bottom: 18px;
+  font-weight: bold;
+}
+
+/* Spelbrädet */
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  padding: 12px;
+  margin-bottom: 18px;
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 8px;
+}
+
+/* Varje ruta */
+.cell {
+  width: 100%;
+  aspect-ratio: 1;
+  background: #17386d;
+  border: 2px solid #e67e00;
+  border-radius: 6px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2.2em;
+  font-weight: bold;
+  color: #e67e00;
+  cursor: pointer;
+  user-select: none;
+}
+
+.cell:hover {
+  background: #1a4080;
+}
+
+.cell:active {
+  transform: scale(0.98);
+}
+
+/* Reset-knapp */
+.reset-button {
+  width: 100%;
+  padding: 12px;
+  background: #e67e00;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1em;
+  cursor: pointer;
+}
+
+.reset-button:hover {
+  background: #cc7000;
+}
+
+/* Mobil */
+@media (max-width: 480px) {
+  .game-container {
+    width: 92%;
+    margin: 20px auto;
+    padding: 16px 12px;
+  }
+
+  .game-container h1 {
+    font-size: 1.8rem;
+  }
+
+  #status {
+    font-size: 1rem;
+  }
+
+  .board {
+    gap: 6px;
+    padding: 10px;
+  }
+
+  .cell {
+    font-size: 2em;
+  }
+}
 /* Footer */
-  
+
 /* Orangea linjen ovanför footern */
 .page-divider {
   border: none;
   height: 2px;
-  background: #ff8c00; 
+  background: #ff8c00;
   margin: 0;
 }
 
 /* Bakgrundsfärg + textfärg för hela footern */
 footer {
-  background: #0a0e27; 
+  background: #0a0e27;
   color: rgba(255, 255, 255, 0.85);
 }
 
@@ -302,7 +483,7 @@ footer .footer-link {
   color: rgba(255, 255, 255, 0.75);
   text-decoration: none;
   transition: color 0.25s ease;
-  position: relative; 
+  position: relative;
 }
 
 /* Hover-effekt */
@@ -353,3 +534,216 @@ footer section p {
   color: rgba(255, 255, 255, 0.1z);
   font-size: 0.9rem;
 }
+
+/* login / register */
+
+#auth-section{
+background:#061a3a;
+color:white;
+font-family:Arial, Helvetica, sans-serif;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+margin:0;
+}
+
+#auth-container{
+background:#0b2a5a;
+padding:40px;
+border-radius:12px;
+width:100%;
+max-width:400px;
+text-align:center;
+box-shadow:0 10px 25px rgba(0,0,0,0.3);
+}
+
+#auth-container h2{
+color:#ff8c00;
+margin-bottom:25px;
+}
+
+#auth-container input{
+width:100%;
+padding:12px;
+margin-bottom:15px;
+border:none;
+border-radius:6px;
+background:#061a3a;
+color:white;
+font-size:14px;
+}
+
+#auth-container input::placeholder{
+color:#cfd6e6;
+}
+
+#submitBtn{
+width:100%;
+background:#ff8c00;
+color:white;
+border:none;
+padding:12px;
+border-radius:6px;
+font-size:16px;
+cursor:pointer;
+transition:0.3s;
+}
+
+#submitBtn:hover{
+background:#e67800;
+}
+
+
+#toggleMode{
+background:none;
+border:none;
+color:#ff8c00;
+cursor:pointer;
+margin-left:5px;
+font-size:14px;
+}
+
+#toggleMode:hover{
+text-decoration:underline;
+}
+
+
+#errorMessage{
+margin-top:10px;
+font-size:14px;
+}
+
+/* LOG/REG MOBILE */
+
+@media (max-width:500px){
+
+#auth-container{
+margin:0 15px;
+padding:30px 20px;
+}
+
+}
+
+
+
+/* Container för hela leaderboard-sektionen */
+.leaderboard-container {
+  padding: 20px 40px;
+  background: #0b2a5a;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+
+/* Rubrik för leaderboard */
+.leaderboard-container h1 {
+  text-align: center;
+  color: #ff8c00;
+  margin-bottom: 30px;
+  font-size: 2.2rem;
+}
+
+/* Sektionen för att välja spel */
+.game-selector {
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.game-selector label {
+  margin-right: 15px;
+  font-weight: bold;
+  color: white;
+  font-size: 1.1rem;
+}
+
+.game-selector select {
+  padding: 10px 15px;
+  border: 2px solid #ff8c00;
+  background: #061a3a;
+  color: white;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.game-selector select:hover {
+  background: #0d3060;
+}
+
+.game-selector select:focus {
+  outline: none;
+  border-color: #ffaa33;
+}
+
+/* Sektionen för leaderboard-tabellen */
+.leaderboard-section {
+  margin-top: 20px;
+}
+
+/* Tabellen själv */
+#leaderboardTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background: #061a3a;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* Tabellhuvud */
+#leaderboardTable thead {
+  background: linear-gradient(90deg, #ff8c00, #ffaa33);
+  color: white;
+}
+
+#leaderboardTable th {
+  padding: 15px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.05rem;
+}
+
+/* Tabellrader */
+#leaderboardTable td {
+  padding: 12px 15px;
+  text-align: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  color: #d6deef;
+}
+
+/* Färg på rader för bättre läsbarhet */
+#leaderboardTable tbody tr:nth-child(even) {
+  background: rgba(255, 140, 0, 0.05);
+}
+
+/* Hover-effekt på rader */
+#leaderboardTable tbody tr:hover {
+  background: rgba(255, 140, 0, 0.15);
+  transition: 0.2s;
+}
+
+/* Mobil-responsiv */
+@media (max-width: 768px) {
+  .leaderboard-container {
+    margin: 20px auto;
+    padding: 15px;
+  }
+
+  .leaderboard-container h1 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+  }
+
+  .game-selector {
+    margin-bottom: 20px;
+  }
+
+  #leaderboardTable th,
+  #leaderboardTable td {
+    padding: 10px 8px;
+    font-size: 0.95rem;
+  }
+}
+
