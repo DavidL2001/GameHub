@@ -47,3 +47,16 @@ CREATE TABLE user_achievements (
 
 SHOW TABLES;
 SELECT * FROM users;
+
+/*Lägg till spel*/
+INSERT INTO games (name, description, max_score)
+VALUES ('Tic Tac Toe','Classic 3x3 strategy game', 1);
+
+INSERT INTO games (name, description, max_score)
+VALUES ('Guess The Number', 'Guess a number between 1 and 100', 100);
+
+/*Achievements till Guess the Number Game*/
+INSERT INTO achievements (name, description) VALUES
+('First Guess', 'Play your first guess game'),
+('Lucky Guess', 'Win in 3 attempts or less'),
+('Persistent', 'Win after 10+ attempts');
