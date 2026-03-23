@@ -9,6 +9,7 @@ export interface IReview extends Document {
   rating: number;
   comment?: string;
   createdAt: Date;
+  updatedAt: Date;
 }
 //Vårt mongoDB schema för reviews
 const ReviewSchema: Schema = new Schema({
@@ -29,10 +30,6 @@ const ReviewSchema: Schema = new Schema({
   comment: {
     type: String
   },
-  createdAt: {
-    type: Date,
-    default: Date.now
-  }
-});
+}, {timestamps: true}); //För uppdaterade reviews och created at
 
 export default mongoose.model<IReview>("Review", ReviewSchema);

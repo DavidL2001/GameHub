@@ -26,3 +26,25 @@ export const getAchievementsByUser = async (userId: number) => {
   );
   return rows || [];
 };
+
+//2. Lägger till upplåsta achievements till users
+export const unlockAchievement = async (
+  userId: number,
+  achievementId: number
+) => {
+  try {
+    await pool.query(
+      `
+      INSERT INTO user_achievements (user_id, achievement_id)
+      VALUES (?, ?)
+      `,
+      [userId, achievementId]
+    );
+  } catch (error: any) {
+    // Ignorar duplicates error om man redan har låst upp achievementet
+    if (error.code === "ER_DUP_ENTRY") {
+      return;
+    }
+    throw error;
+  }
+};
