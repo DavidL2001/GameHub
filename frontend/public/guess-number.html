@@ -14,8 +14,29 @@
     <button id="guessBtn">Guess</button>
     <button id="resetBtn" style="display: none;">Play again!</button>
 
+<p id="lastGuess"></p>
 <p id="feedback"></p>
 <p id="attempts"></p>
+
+<div id="achievementPopup" style="display:none; border:1px solid black; padding:10px;">
+  <p id="achievementText"></p>
+</div>
+
+<h3>Leave your thoughts 💭</h3>
+<label for="rating">Rating (1-5)</label>
+<div id="starRating">
+  <span data-value="1">★</span>
+  <span data-value="2">★</span>
+  <span data-value="3">★</span>
+  <span data-value="4">★</span>
+  <span data-value="5">★</span>
+</div>
+<br>
+<textarea id="reviewText"></textarea>
+<br>
+<button id="reviewBtn">Submit Review</button>
+<p id="reviewMessage"></p>
+<ul id="reviewsList"></ul>
 
 <script src="/scripts/guessNumber.js"></script>
 </body>
