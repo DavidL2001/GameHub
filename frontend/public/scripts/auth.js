@@ -57,12 +57,15 @@ form.addEventListener("submit", async (e) => {
       body: JSON.stringify(body)
     });
     const data = await response.json();
+      console.log("Login response data:", data); // Test
+
 
     // Kollar om inloggningen gick igenom
     if (response.ok) {
       if (isLogin) {
         // Korrekt inloggning, skickar användaren vidare till deras Dashboard
         localStorage.setItem("token", data.token);
+        localStorage.setItem("userId", data.userId);  // TEST 
         window.location.href = "/dashboard.html";
       } else {
         // Korrekt registrering

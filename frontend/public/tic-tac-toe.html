@@ -29,6 +29,33 @@
       <button type="button" class="reset-button" onclick="resetGame()">Restart Game</button>
     </main>
 
+<!-- Achievement Popup -->
+<div id="achievementPopup" style="display:none; border:1px solid black; padding:10px; margin: 20px;">
+  <p id="achievementText"></p>
+</div>
+
+<!-- Reviews-sektion -->
+<section class="game-container" style="margin-top: 30px;">
+  <h3>Game Reviews 💭</h3>
+  
+  <div class="review-form">
+    <label>Din Rating:</label>
+    <div id="starRating" style="font-size: 2em; cursor: pointer; margin-bottom: 10px;">
+      <span data-value="1">★</span>
+      <span data-value="2">★</span>
+      <span data-value="3">★</span>
+      <span data-value="4">★</span>
+      <span data-value="5">★</span>
+    </div>
+    
+    <textarea id="reviewText" placeholder="Vad tyckte du om spelet?" style="width: 100%; margin-bottom: 10px;"></textarea>
+    <button id="reviewBtn">Skicka review</button>
+    <p id="reviewMessage"></p>
+  </div>
+  
+  <ul id="reviewsList"></ul>
+</section>
+
 <!-- Footer -->
 <hr class="page-divider">
 
