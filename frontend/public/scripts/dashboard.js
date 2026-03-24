@@ -99,3 +99,4 @@ const displayAchievements = (achievements) => {
 fetchUser();
 fetchScores();
 fetchAchievements();
+

@@ -55,8 +55,22 @@ VALUES ('Tic Tac Toe','Classic 3x3 strategy game', 1); /* Kattis ID:2 - Davids I
 INSERT INTO games (name, description, max_score)
 VALUES ('Guess The Number', 'Guess a number between 1 and 100', 100); /* Kattis ID:3 - Davids ID: - Noshins ID: */
 
+INSERT INTO games (name, description, max_score)
+VALUES ('Rock paper scissors', 'Choose rock, paper, or scissors', 100); /* Kattis ID:3 - Davids ID: - Noshins ID: */
+
 /*Achievements till Guess the Number Game*/
 INSERT INTO achievements (name, description) VALUES
 ('First Guess', 'Play your first guess game'), /* Kattis ID:2 - Davids ID: - Noshins ID: */
 ('Lucky Guess', 'Win in 3 attempts or less'), /* Kattis ID:3 - Davids ID: - Noshins ID: */
 ('Persistent', 'Win after 10+ attempts'); /* Kattis ID:4 - Davids ID: - Noshins ID: */
+
+/*Achievements till tic-tac-toe Game*/
+INSERT INTO achievements (name, description) VALUES
+('First Win TTT', 'Win your first Tic Tac Toe game'),
+('TTT Streak', 'Win 3 games in a row');
+
+/*Achievements till Rock Paper scissors Game*/
+INSERT INTO achievements (name, description) VALUES
+('First Win RPS', 'Win your first Rock Paper Scissors game'),
+('RPS Champion', 'Win 5 games in a row');
+

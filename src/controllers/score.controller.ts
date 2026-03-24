@@ -14,6 +14,7 @@ export const createScore = async (req: Request, res: Response) => {
     );
     res.status(201).json(result);
   } catch (error) {
+    console.error("Score creation error:", error);
     res.status(500).json({
       message: "Failed to create score"
     });
