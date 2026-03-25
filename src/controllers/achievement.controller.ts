@@ -20,10 +20,16 @@ export const unlockAchievement = async (req: Request, res: Response) => {
   try {
     const userId = (req as AuthRequest).user.id;
     const { achievement_id } = req.body;
-    await achievementService.unlockAchievement(userId, achievement_id);
-    res.status(200).json({
-      message: "Achievement unlocked"
-    });
+    const unlocked = await achievementService.unlockAchievement(
+      userId,
+      achievement_id
+    );
+    //Fixar achievements som poppar upp även fast de redan är upplåsta
+    if (unlocked) {
+      return res.json({ unlocked: true });
+    } else {
+      return res.json({ unlocked: false });
+    }
   } catch (error) {
     res.status(500).json({
       message: "Failed to unlock achievement"

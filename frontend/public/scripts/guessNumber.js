@@ -97,7 +97,7 @@ resetBtn.addEventListener("click", resetGame);
 // Låser upp Achievements/sparar dem
 const unlockAchievement = async (achievementId, name) => {
   try {
-    await fetch("http://localhost:3000/achievements/unlock", {
+    const response = await fetch("http://localhost:3000/achievements/unlock", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -107,7 +107,11 @@ const unlockAchievement = async (achievementId, name) => {
         achievement_id: achievementId
       })
     });
-    showPopup(name);
+    const data = await response.json();
+    // Visa bara achievement popup om det är nytt för spelaren
+    if (data.unlocked) {
+      showPopup(name);
+    }
   } catch (err) {
     console.error(err);
   }
