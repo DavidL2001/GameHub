@@ -7,6 +7,11 @@ let currentPlayer = "X";
 // Stoppar nya drag när spelet är slut
 let gameActive = true;
 
+// Räknare för hur många matcher spelaren och datorn vunnit (för leaderboarden)
+let playerWins = 0;
+let computerWins = 0;
+let lastSavedSessionScore = 0;
+
 // Game ID för Tic Tac Toe
 const gameId = 1;
 const token = localStorage.getItem("token");
@@ -37,6 +42,15 @@ const winningConditions = [
 
 // Elementet där vi visar vem som är på tur
 const statusEl = document.getElementById("status");
+
+// Uppdatera och visa poängen på skärmen (liksom Sten Sax Påse gör)
+function updateWinCounter() {
+  const playerWinsEl = document.getElementById("playerWins");
+  const computerWinsEl = document.getElementById("computerWins");
+  
+  if (playerWinsEl) playerWinsEl.textContent = playerWins;
+  if (computerWinsEl) computerWinsEl.textContent = computerWins;
+}
 
 function updateStatus() {
   if (!statusEl) return;
@@ -86,8 +100,18 @@ function checkResult() {
     if (board[a] && board[a] === board[b] && board[a] === board[c]) {
       statusEl.innerText = `Player ${currentPlayer} wins!`
       gameActive = false;
-      logScore(1);
-      unlockAchievement(4, "First Win TTT"); // First Win TTT (ID 4)
+      
+      // Bara spelaren (X) får spara poäng - datorn (O) sparar inget
+      if (currentPlayer === "X") {
+        playerWins++;
+        // Vi skickar inte alltid 1 längre, utan sparar sessionens slutpoäng senare.
+        unlockAchievement(4, "First Win TTT"); // First Win TTT (ID 4)
+      } else {
+        // Datorn (O) vann - spara inte något för spelaren
+        computerWins++;
+      }
+      
+      updateWinCounter();  // Uppdatera räknaren på skärmen
       return true;
     }
   }
@@ -95,6 +119,12 @@ function checkResult() {
 }
 
 function resetGame() {
+  // Spara aktuell sessionspoäng om den blivit bättre än senaste sparade.
+  if (playerWins > lastSavedSessionScore) {
+    logScore(playerWins);
+    lastSavedSessionScore = playerWins;
+  }
+
   board = ["", "", "", "", "", "", "", "", ""];
   gameActive = true;
   currentPlayer = "X";
@@ -102,7 +132,17 @@ function resetGame() {
   // Rensa rutorna i HTML
   document.querySelectorAll(".cell").forEach((cell) => (cell.textContent = ""));
   updateStatus();
+  // Notering: Vi nollställer INTE playerWins/computerWins - de sparar totala matchresultat
+  // för att visa på leaderboarden hur många gånger spelaren vunnit totalt
 }
+
+// Säkerhet: om spelaren lämnar sidan sparar vi bästa sessionspoäng en sista gång.
+window.addEventListener("beforeunload", () => {
+  if (playerWins > lastSavedSessionScore) {
+    logScore(playerWins);
+    lastSavedSessionScore = playerWins;
+  }
+});
 
 
 async function logScore(score) {
@@ -326,5 +366,6 @@ const showPopup = (name) => {
   }, 2000);
 };
 
-// Startstatus direkt vid laddning
+// Startstatus och räknare direkt vid laddning
 updateStatus();
+updateWinCounter();  // Visa poängen på skärmen när sidan laddar.
