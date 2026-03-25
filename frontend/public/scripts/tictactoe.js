@@ -7,6 +7,22 @@ let currentPlayer = "X";
 // Stoppar nya drag när spelet är slut
 let gameActive = true;
 
+// Game ID för Tic Tac Toe
+const gameId = 1;
+const token = localStorage.getItem("token");
+
+// Dom-element för reviews 
+const reviewInput = document.getElementById("reviewText");
+const reviewBtn = document.getElementById("reviewBtn");
+const reviewMessage = document.getElementById("reviewMessage");
+const reviewsList = document.getElementById("reviewsList");
+const stars = document.querySelectorAll("#starRating span");
+let selectedRating = 0;
+
+// Dom-element för achievements
+const popup = document.getElementById("achievementPopup");
+const popupText = document.getElementById("achievementText");
+
 // Alla sätt som kan ge vinst i tre i rad
 const winningConditions = [
   [0, 1, 2], // övre raden
@@ -71,6 +87,7 @@ function checkResult() {
       statusEl.innerText = `Player ${currentPlayer} wins!`
       gameActive = false;
       logScore(1);
+      unlockAchievement(4, "First Win TTT"); // First Win TTT (ID 4)
       return true;
     }
   }
@@ -121,6 +138,193 @@ async function logScore(score) {
     console.error("Error:", error);
   }
 }
+
+// Stjärnor för rating 
+stars.forEach(star => {
+  star.addEventListener("click", () => {
+    selectedRating = Number(star.dataset.value);
+    highlightStars(selectedRating);
+  });
+  star.style.color = "#ccc";
+  star.style.cursor = "pointer";
+});
+
+const highlightStars = (rating) => {
+  stars.forEach(star => {
+    if (Number(star.dataset.value) <= rating) {
+      star.style.color = "gold";
+    } else {
+      star.style.color = "gray";
+    }
+  });
+};
+
+stars.forEach(star => {
+  star.addEventListener("mouseover", () => {
+    highlightStars(Number(star.dataset.value));
+  });
+  star.addEventListener("mouseout", () => {
+    highlightStars(selectedRating);
+  });
+});
+
+// Skicka review till backend
+if (reviewBtn) {
+  reviewBtn.addEventListener("click", async () => {
+    const comment = reviewInput.value;
+    const rating = selectedRating;
+    if (!comment) {
+      reviewMessage.textContent = "You cannot leave an empty review.";
+      return;
+    }
+    if (!rating) {
+      reviewMessage.textContent = "Select a rating.";
+      return;
+    }
+    try {
+      const response = await fetch("http://localhost:3000/reviews", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          game_id: gameId,
+          rating: rating,
+          comment: comment
+        })
+      });
+      if (!response.ok) {
+        reviewMessage.textContent = "You must be logged in to leave a review.";
+        return;
+      }
+      reviewMessage.textContent = "Review submitted!";
+      reviewInput.value = "";
+      selectedRating = 0;
+      highlightStars(0);
+    } catch (err) {
+      console.error(err);
+    }
+    fetchReviews();
+  });
+}
+
+// Hämta och visa reviews från backend
+const fetchReviews = async () => {
+  try {
+    const response = await fetch(`http://localhost:3000/reviews/game/${gameId}`);
+    const data = await response.json();
+    displayReviews(data);
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+const displayReviews = (reviews) => {
+  reviewsList.innerHTML = "";
+  if (!reviews || reviews.length === 0) {
+    reviewsList.innerHTML = "<li>No reviews yet</li>";
+    return;
+  }
+  reviews.forEach(r => {
+    const li = document.createElement("li");
+    const isOwner = r.userId === getUserIdFromToken();
+    const createdDate = new Date(r.createdAt);
+    const updatedDate = new Date(r.updatedAt);
+    const created = createdDate.toLocaleDateString();
+    const showUpdated = updatedDate.getTime() !== createdDate.getTime();
+    const updated = updatedDate.toLocaleDateString();
+
+    li.innerHTML = `
+    👤 Username: ${r.username} <br>
+    ${renderStars(r.rating)} — ${r.comment} <br>  
+  📅 Created: ${created} <br>
+  ${showUpdated ? `✏️ Updated: ${updated} <br>` : ""}
+  ${isOwner ? `
+    <button onclick="deleteReview('${r._id}')">Delete</button>
+    <button onclick="editReview('${r._id}', '${r.comment}', ${r.rating})">Edit</button>
+  ` : ""}
+  <hr>
+`;
+  reviewsList.appendChild(li);
+  });
+};
+
+// DELETE Reviews
+const deleteReview = async (id) => {
+  await fetch(`http://localhost:3000/reviews/${id}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
+  fetchReviews();
+};
+
+// Redigera Review
+const editReview = (id, oldComment, oldRating) => {
+  const newComment = prompt("Edit comment:", oldComment);
+  const newRating = prompt("Edit rating (1-5):", oldRating);
+  if (!newComment || !newRating) return;
+  updateReview(id, newComment, Number(newRating));
+};
+
+// PUT reviews (updaterar review)
+const updateReview = async (id, comment, rating) => {
+  await fetch(`http://localhost:3000/reviews/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`
+    },
+    body: JSON.stringify({ comment, rating })
+  });
+  fetchReviews();
+};
+
+const getUserIdFromToken = () => {
+  const payload = JSON.parse(atob(token.split(".")[1]));
+  return payload.id;
+};
+
+// Stjärnor för reviewslistan
+const renderStars = (rating) => {
+  let stars = "";
+  for (let i = 0; i < rating; i++) {
+    stars += `<span style="color:#FFD700;">★</span>`;
+  }
+  return stars;
+};
+
+fetchReviews();
+
+// Låser upp Achievements/sparar dem
+const unlockAchievement = async (achievementId, name) => {
+  try {
+    await fetch("http://localhost:3000/achievements/unlock", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`
+      },
+      body: JSON.stringify({
+        achievement_id: achievementId
+      })
+    });
+    showPopup(name);
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+// Achievement popup funktionen
+const showPopup = (name) => {
+  popupText.textContent = `🏆 Achievement unlocked: ${name}`;
+  popup.style.display = "block";
+  setTimeout(() => {
+    popup.style.display = "none";
+  }, 2000);
+};
 
 // Startstatus direkt vid laddning
 updateStatus();
