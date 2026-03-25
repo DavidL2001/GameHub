@@ -43,6 +43,25 @@ export const getScoresByUser = async (userId: number) => {
 export const getLeaderboardByGame = async (gameId: number) => {
   const [rows] = await pool.query(
     `
+    SELECT users.id, users.username, MAX(scores.score) AS score
+    FROM scores
+    JOIN users ON scores.user_id = users.id
+    WHERE scores.game_id = ?
+    GROUP BY users.id, users.username
+    ORDER BY score DESC
+    LIMIT 10
+    `,
+    [gameId]
+  );
+  return rows || [];
+};
+
+
+
+/* //4. Hämta leaderboard (Topp 10) för ett spel - BACKUP
+export const getLeaderboardByGame = async (gameId: number) => {
+  const [rows] = await pool.query(
+    `
     SELECT users.username, scores.score
     FROM scores
     JOIN users ON scores.user_id = users.id
@@ -53,7 +72,7 @@ export const getLeaderboardByGame = async (gameId: number) => {
     [gameId]
   );
   return rows || [];
-};
+}; */
 
 //5. Ta bort ett score (mest för admin inte användare)
 export const deleteScore = async (id: number) => {

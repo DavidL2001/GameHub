@@ -63,7 +63,7 @@ function playerMove(choice) {
   if (result === "win") {
     playerScore++;
     statusEl.textContent = "You win this round!";
-    logScore(1); // Vinnare får 1 poäng
+    // Vi sparar inte 1 per runda längre, utan matchens slutpoäng.
     unlockAchievement(6, "First Win RPS"); // First Win RPS (ID 6)
   } else if (result === "lose") {
     computerScore++;
@@ -77,12 +77,24 @@ function playerMove(choice) {
 
 // Återställ spelet
 function resetGame() {
+  // Spara slutpoängen innan vi nollställer matchen.
+  if (playerScore > 0) {
+    logScore(playerScore);
+  }
+
   playerScore = 0;
   computerScore = 0;
   resultEl.innerHTML = "";
   statusEl.textContent = "Choose your move";
   updateScoreDisplay();
 }
+
+// Om spelaren lämnar sidan utan att trycka reset försöker vi spara sessionens poäng.
+window.addEventListener("beforeunload", () => {
+  if (playerScore > 0) {
+    logScore(playerScore);
+  }
+});
 
 // Skicka poäng till leaderboard
 async function logScore(score) {
