@@ -16,6 +16,10 @@ let lastSavedSessionScore = 0;
 const gameId = 1;
 const token = localStorage.getItem("token");
 
+// Hämta användarnamnet från localStorage (sparades vid inloggning)
+// Om det inte finns något användarnamn, använd "Player" som fallback
+const playerName = localStorage.getItem("username") || "Player";
+
 // Dom-element för reviews 
 const reviewInput = document.getElementById("reviewText");
 const reviewBtn = document.getElementById("reviewBtn");
@@ -56,9 +60,20 @@ function updateStatus() {
   if (!statusEl) return;
 
   // Visa tur eller att spelet är slut
-  statusEl.innerText = gameActive
-    ? `Player ${currentPlayer}'s turn`
-    : `The game is over`;
+  // Vi visar användarens namn (playerName) när det är deras tur (currentPlayer === "X")
+  // Datorn får bara ordet "Computer" eftersom det inte är en riktig person
+  if (gameActive) {
+    if (currentPlayer === "X") {
+      // Det är spelaren (X) som ska spela - visa deras användarnamn
+      statusEl.innerText = `${playerName}'s turn`;
+    } else {
+      // Det är datorn (O) som ska spela
+      statusEl.innerText = "Computer's turn";
+    }
+  } else {
+    // Spelet är över
+    statusEl.innerText = `The game is over`;
+  }
 }
 
 function makeMove(cellIndex) {
@@ -367,5 +382,10 @@ const showPopup = (name) => {
 };
 
 // Startstatus och räknare direkt vid laddning
+// Uppdatera etiketten för spelaren med användarnamnet istället för "Player (X)"
+const playerLabelEl = document.getElementById("playerLabel");
+if (playerLabelEl) {
+  playerLabelEl.textContent = playerName;
+}
 updateStatus();
 updateWinCounter();  // Visa poängen på skärmen när sidan laddar.

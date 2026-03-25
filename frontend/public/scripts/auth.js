@@ -66,6 +66,28 @@ form.addEventListener("submit", async (e) => {
         // Korrekt inloggning, skickar användaren vidare till deras Dashboard
         localStorage.setItem("token", data.token);
         localStorage.setItem("userId", data.userId);  // TEST 
+        
+        // Hämta användarens info (username) från /auth/me endpoint
+        // Vi behöver detta för att visa användarnamnet i spelen
+        try {
+          const meResponse = await fetch("http://localhost:3000/auth/me", {
+            headers: {
+              // Vi skickar JWT-token i Authorization header för autentisering
+              "Authorization": `Bearer ${data.token}`
+            }
+          });
+          
+          // Konvertera svaret från servern till JSON
+          const meData = await meResponse.json();
+          
+          // Spara användarnamnet i localStorage så vi kan använda det senare
+          localStorage.setItem("username", meData.username);
+          console.log("Username sparad:", meData.username);
+        } catch (error) {
+          // Om något går fel vid hämtning av användardata, logga felet men fortsätt
+          console.error("Kunde inte hämta username:", error);
+        }
+        
         window.location.href = "/dashboard.html";
       } else {
         // Korrekt registrering
