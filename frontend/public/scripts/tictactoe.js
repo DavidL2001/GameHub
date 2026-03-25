@@ -356,7 +356,8 @@ fetchReviews();
 // Låser upp Achievements/sparar dem
 const unlockAchievement = async (achievementId, name) => {
   try {
-    await fetch("http://localhost:3000/achievements/unlock", {
+    // Vi sparar response så vi kan kontrollera om achievement verkligen blev upplast nu.
+    const response = await fetch("http://localhost:3000/achievements/unlock", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -366,7 +367,13 @@ const unlockAchievement = async (achievementId, name) => {
         achievement_id: achievementId
       })
     });
-    showPopup(name);
+
+    // Backend skickar t.ex. { unlocked: true/false }.
+    // Visa popup bara nar det ar en ny unlock for spelaren.
+    const data = await response.json();
+    if (response.ok && data.unlocked) {
+      showPopup(name);
+    }
   } catch (err) {
     console.error(err);
   }
