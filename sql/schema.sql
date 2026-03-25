@@ -46,31 +46,40 @@ CREATE TABLE user_achievements (
 );
 
 SHOW TABLES;
-SELECT * FROM users;
+SELECT * FROM games;
+SELECT * FROM achievements;
 
-/*Lägg till spel*/
+/*Games*/
 INSERT INTO games (name, description, max_score)
-VALUES ('Tic Tac Toe','Classic 3x3 strategy game', 1); /* Kattis ID:2 - Davids ID: - Noshins ID: */
-
-INSERT INTO games (name, description, max_score)
-VALUES ('Guess The Number', 'Guess a number between 1 and 100', 100); /* Kattis ID:3 - Davids ID: - Noshins ID: */
+VALUES ('Tic Tac Toe','Classic 3x3 strategy game', 1);
 
 INSERT INTO games (name, description, max_score)
-VALUES ('Rock paper scissors', 'Choose rock, paper, or scissors', 100); /* Kattis ID:3 - Davids ID: - Noshins ID: */
+VALUES ('Guess The Number', 'Guess a number between 1 and 100', 100);
+
+INSERT INTO games (name, description, max_score)
+VALUES ('Rock Paper Scissors','Classic 1v1 game', 1);
+
+INSERT INTO games (name, description, max_score)
+VALUES ('Dice', 'Roll two dice to try your luck', 12);
 
 /*Achievements till Guess the Number Game*/
 INSERT INTO achievements (name, description) VALUES
-('First Guess', 'Play your first guess game'), /* Kattis ID:2 - Davids ID: - Noshins ID: */
-('Lucky Guess', 'Win in 3 attempts or less'), /* Kattis ID:3 - Davids ID: - Noshins ID: */
-('Persistent', 'Win after 10+ attempts'); /* Kattis ID:4 - Davids ID: - Noshins ID: */
+('First Guess', 'Play your first guess game'),
+('Lucky Guess', 'Win in 3 attempts or less'),
+('Persistent', 'Win after 10+ attempts');
 
-/*Achievements till tic-tac-toe Game*/
+/*Achievements till Tic Tac Toe*/
 INSERT INTO achievements (name, description) VALUES
 ('First Win TTT', 'Win your first Tic Tac Toe game'),
 ('TTT Streak', 'Win 3 games in a row');
 
-/*Achievements till Rock Paper scissors Game*/
+/*Achievements till Rock Paper Scissors*/
 INSERT INTO achievements (name, description) VALUES
 ('First Win RPS', 'Win your first Rock Paper Scissors game'),
 ('RPS Champion', 'Win 5 games in a row');
 
+/*Achievements till Dice */
+INSERT INTO achievements (name, description) VALUES
+('First Roll', 'Roll the dice for the first time'),
+('Seeing Double', 'Roll double 6'),
+('Unlucky', 'Roll the lowest possible score');
