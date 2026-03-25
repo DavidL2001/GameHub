@@ -6,8 +6,18 @@ const choices = ["rock", "paper", "scissors"];
 const gameId = 2; // Rock Paper Scissors ID
 const token = localStorage.getItem("token");
 
+// Hämta användarnamnet från localStorage (sparades vid inloggning)
+// Om det inte finns något användarnamn, använd "You" som fallback
+const playerName = localStorage.getItem("username") || "You";
+
 const statusEl = document.getElementById("status");
 const resultEl = document.getElementById("result");
+
+// Uppdatera etiketten för spelaren med användarnamnet istället för "You"
+const playerLabelEl = document.getElementById("playerLabel");
+if (playerLabelEl) {
+  playerLabelEl.textContent = playerName;
+}
 
 // Dom-element för reviews
 const reviewInput = document.getElementById("reviewText");
@@ -58,16 +68,19 @@ function playerMove(choice) {
   const result = determineWinner(choice, computerChoice);
   
   // Visa val och resultat (utan emojis)
-  resultEl.innerHTML = `<p>You chose ${choice} | Computer chose ${computerChoice}</p>`;
+  // Vi visar användarnamnet istället för "You" för personalisering
+  resultEl.innerHTML = `<p>${playerName} chose ${choice} | Computer chose ${computerChoice}</p>`;
   
   if (result === "win") {
     playerScore++;
-    statusEl.textContent = "You win this round!";
+    // Visa användarnamnet när de vinner
+    statusEl.textContent = `${playerName} wins this round!`;
     // Vi sparar inte 1 per runda längre, utan matchens slutpoäng.
     unlockAchievement(6, "First Win RPS"); // First Win RPS (ID 6)
   } else if (result === "lose") {
     computerScore++;
-    statusEl.textContent = "Computer wins this round!";
+    // Visa användarnamnet även när de förlorar
+    statusEl.textContent = `${playerName} loses this round!`;
   } else {
     statusEl.textContent = "It's a draw!";
   }
@@ -85,7 +98,8 @@ function resetGame() {
   playerScore = 0;
   computerScore = 0;
   resultEl.innerHTML = "";
-  statusEl.textContent = "Choose your move";
+  // Visa användarnamnet när spelet nollställs
+  statusEl.textContent = `${playerName}, choose your move`;
   updateScoreDisplay();
 }
 
