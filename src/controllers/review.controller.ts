@@ -43,13 +43,20 @@ export const getReviewById = async (req: Request<ReviewParams>, res: Response) =
     res.status(500).json({ message: "Review not found" });
   }
 };
-//4.
+//4. Uppdaterad för edit/update review
 export const updateReview = async (req: Request<ReviewParams>, res: Response) => {
   try {
-    const review = await reviewService.updateReview(req.params.id, req.body);
+    const { comment, rating } = req.body;
+    const review = await reviewService.updateReview(
+      req.params.id,
+      comment,
+      rating
+    );
     res.json(review);
-  } catch (error) {
-    res.status(500).json({ message: "Failed to update review" });
+  } catch (error: any) {
+    res.status(400).json({
+      message: error.message
+    });
   }
 };
 //5.

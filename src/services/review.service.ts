@@ -27,9 +27,17 @@ export const getReviewById = async (id: string) => {
   return await Review.findById(id);
 };
 
-//4. Uppdatera en review
-export const updateReview = async (id: string, data: Partial<IReview>) => {
-  return await Review.findByIdAndUpdate(id, data, { new: true }); //returnerar det nya dokumentet returnNewDocument
+//4. Uppdatera en review (UPPDATERAD)
+export const updateReview = async (id: string, comment: string, rating: number) => {
+  // Backend validation, stoppar användaren från att gå över 5 i rating
+  if (rating < 1 || rating > 5) {
+    throw new Error("Rating must be between 1 and 5");
+  }
+  return await Review.findByIdAndUpdate(
+    id,
+    { comment, rating },
+    { new: true }
+  );
 };
 
 //5. Ta bort en review

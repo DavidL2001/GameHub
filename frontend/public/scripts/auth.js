@@ -82,10 +82,10 @@ form.addEventListener("submit", async (e) => {
           
           // Spara användarnamnet i localStorage så vi kan använda det senare
           localStorage.setItem("username", meData.username);
-          console.log("Username sparad:", meData.username);
+          console.log("Username saved:", meData.username);
         } catch (error) {
           // Om något går fel vid hämtning av användardata, logga felet men fortsätt
-          console.error("Kunde inte hämta username:", error);
+          console.error("Couldn't fetch username:", error);
         }
         
         window.location.href = "/dashboard.html";
