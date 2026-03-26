@@ -34,16 +34,14 @@ export const unlockAchievement = async (
 ) => {
   try {
     await pool.query(
-      `
-      INSERT INTO user_achievements (user_id, achievement_id)
-      VALUES (?, ?)
-      `,
+      `INSERT INTO user_achievements (user_id, achievement_id)
+       VALUES (?, ?)`,
       [userId, achievementId]
     );
+    return true; // Nytt achievement
   } catch (error: any) {
-    // Ignorar duplicates error om man redan har låst upp achievementet
     if (error.code === "ER_DUP_ENTRY") {
-      return;
+      return false; // Redan upplåst
     }
     throw error;
   }

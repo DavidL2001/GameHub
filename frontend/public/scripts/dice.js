@@ -7,10 +7,12 @@ const reviewBtn = document.getElementById("reviewBtn");
 const reviewMessage = document.getElementById("reviewMessage");
 const reviewsList = document.getElementById("reviewsList");
 const stars = document.querySelectorAll("#starRating span");
+let hasRolled = false;
 let selectedRating = 0;
+let editingReviewId = null;
+let editingRating = 0;
 
 const token = localStorage.getItem("token");
-let hasRolled = false;
 
 /* Dice */
 rollBtn.addEventListener("click", () => {
@@ -56,7 +58,7 @@ const saveScore = async (score) => {
 // Låser upp Achievements/sparar dem
 const unlockAchievement = async (achievementId, name) => {
   try {
-    await fetch("http://localhost:3000/achievements/unlock", {
+    const response = await fetch("http://localhost:3000/achievements/unlock", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -66,7 +68,9 @@ const unlockAchievement = async (achievementId, name) => {
         achievement_id: achievementId
       })
     });
-    if (data.message === "Achievement unlocked") {
+    const data = await response.json();
+    // Visa bara achievement popup om det är nytt för spelaren
+    if (data.unlocked) {
       showPopup(name);
     }
   } catch (err) {
@@ -175,14 +179,42 @@ const deleteReview = async (id) => {
   });
   fetchReviews();
 };
+window.deleteReview = deleteReview;
 
-// Redigera Review
+// Redigera Review UPPDATERAD
 const editReview = (id, oldComment, oldRating) => {
   const newComment = prompt("Edit comment:", oldComment);
-  const newRating = prompt("Edit rating (1-5):", oldRating);
+  let newRating = prompt("Edit rating (1-5):", oldRating);
   if (!newComment || !newRating) return;
-  updateReview(id, newComment, Number(newRating));
+  newRating = Number(newRating);
+  // Validation, stoppar användaren från att lägga till mer än 5 stjärnor/mindre än 1 stjärna
+  if (isNaN(newRating) || newRating < 1 || newRating > 5) {
+    alert("Rating must be between 1 and 5");
+    return;
+  }
+  updateReview(id, newComment, newRating);
 };
+
+// Funktioner för att redigera, spara review eller avbryta
+const startEdit = (id) => {
+  editingReviewId = id;
+  fetchReviews();
+};
+window.startEdit = startEdit;
+const saveEdit = async (id) => {
+  const input = document.getElementById(`editComment-${id}`);
+  const newComment = input.value;
+  if (!newComment) return;
+  await updateReview(id, newComment, editingRating); 
+  editingReviewId = null;
+  fetchReviews();
+};
+window.saveEdit = saveEdit;
+const cancelEdit = () => {
+  editingReviewId = null;
+  fetchReviews();
+};
+window.cancelEdit = cancelEdit;
 
 // PUT reviews (updaterar review)
 const updateReview = async (id, comment, rating) => {
@@ -224,23 +256,67 @@ const displayReviews = (reviews) => {
     const createdDate = new Date(r.createdAt);
     const updatedDate = new Date(r.updatedAt);
     const created = createdDate.toLocaleDateString();
-    // Visar bara "Updated" när man har redigerat
+    // Visas bara när man redigerat/uppdaterat review
     const showUpdated = updatedDate.getTime() !== createdDate.getTime();
     const updated = updatedDate.toLocaleDateString();
-
-    li.innerHTML = `
-    👤 Username: ${r.username} <br>
-    ${renderStars(r.rating)} — ${r.comment} <br>  
-  📅 Created: ${created} <br>
-  ${showUpdated ? `✏️ Updated: ${updated} <br>` : ""}
-  ${isOwner ? `
-    <button onclick="deleteReview('${r._id}')">Delete</button>
-    <button onclick="editReview('${r._id}', '${r.comment}', ${r.rating})">Edit</button>
-  ` : ""}
+    if (editingReviewId === r._id) {
+      // När man redigerar en review (Nu med stjärnsystemet)
+     li.innerHTML = `
+  <input id="editComment-${r._id}" value="${r.comment}" />
+  <br>
+  <div id="editStars-${r._id}">
+    <span data-value="1">★</span>
+    <span data-value="2">★</span>
+    <span data-value="3">★</span>
+    <span data-value="4">★</span>
+    <span data-value="5">★</span>
+  </div>
+  <br>
+  <button onclick="saveEdit('${r._id}')">Save</button>
+  <button onclick="cancelEdit()">Cancel</button>
   <hr>
 `;
-  reviewsList.appendChild(li);
+setTimeout(() => {
+  const stars = document.querySelectorAll(`#editStars-${r._id} span`);
+  editingRating = r.rating;
+  const highlight = (rating) => {
+    stars.forEach(star => {
+      star.style.color =
+        Number(star.dataset.value) <= rating ? "#FFD700" : "#ccc";
+      star.style.cursor = "pointer";
+    });
+  };
+  highlight(editingRating);
+  stars.forEach(star => {
+    star.addEventListener("click", () => {
+      editingRating = Number(star.dataset.value);
+      highlight(editingRating);
+    });
+    star.addEventListener("mouseover", () => {
+      highlight(Number(star.dataset.value));
+    });
+    star.addEventListener("mouseout", () => {
+      highlight(editingRating);
+    });
+  });
+}, 0);
+    } else {
+      // När man skriver review
+      li.innerHTML = `
+        👤 Username: ${r.username} <br>
+        ${renderStars(r.rating)} — ${r.comment} <br>  
+        📅 Created: ${created} <br>
+        ${showUpdated ? `✏️ Updated: ${updated} <br>` : ""}
+        ${isOwner ? `
+          <button onclick="deleteReview('${r._id}')">Delete</button>
+          <button onclick="startEdit('${r._id}')">Edit</button>
+        ` : ""}
+        <hr>
+      `;
+    }
+    reviewsList.appendChild(li);
   });
 };
+
 
 fetchReviews();
