@@ -23,6 +23,8 @@
 /* Spel */
 @import url('games/tictactoe.css');
 @import url('games/rockpaperscissors.css');
+@import url('games/guessnumber.css');
+@import url('games/dice.css');
 
 /* Funktioner */
 @import url('leaderboard.css');

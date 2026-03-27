@@ -1,0 +1,165 @@
+/* Guess the number */
+
+/* MAIN CONTAINER */
+
+#guess-number-container{
+max-width:600px;
+margin:40px auto;
+background:#0b2a5a;
+padding:35px;
+border-radius:12px;
+text-align:center;
+}
+
+/* TITLE */
+
+#guess-number-container h1{
+color:#ff8c00;
+margin-bottom:10px;
+}
+
+/* TEXT */
+
+#guess-number-container p{
+color:#cfd6e6;
+margin-bottom:10px;
+}
+
+/* INPUT */
+
+#guessInput{
+width:100%;
+padding:12px;
+border:none;
+border-radius:6px;
+background:#061a3a;
+color:white;
+margin:15px 0;
+font-size:16px;
+}
+
+/* BUTTONS */
+
+#guessBtn,
+#resetBtn,
+#reviewBtn{
+background:#ff8c00;
+color:white;
+border:none;
+padding:12px 20px;
+border-radius:6px;
+font-size:16px;
+cursor:pointer;
+transition:0.3s;
+margin:5px;
+}
+
+#guessBtn:hover,
+#resetBtn:hover,
+#reviewBtn:hover{
+background:#e67800;
+}
+#resetBtn{
+display:block;
+margin:10px auto;
+}
+/* GAME FEEDBACK */
+
+#lastGuess,
+#feedback,
+#attempts{
+margin-top:8px;
+font-size:15px;
+}
+
+/* ACHIEVEMENT POPUP */
+
+#achievementPopup{
+background:#061a3a;
+border:1px solid #ff8c00;
+border-radius:8px;
+padding:15px;
+margin-top:15px;
+animation:fadeIn 0.3s ease;
+}
+
+/* STAR RATING */
+
+#starRating{
+margin:10px 0;
+}
+
+#starRating span{
+font-size:26px;
+cursor:pointer;
+color:#555;
+transition:0.2s;
+}
+
+#starRating span:hover,
+#starRating span.active{
+color:#ff8c00;
+}
+
+/* TEXTAREA */
+
+#reviewText{
+width:100%;
+height:100px;
+padding:10px;
+border:none;
+border-radius:6px;
+background:#061a3a;
+color:white;
+margin-top:10px;
+resize:none;
+}
+
+/* REVIEW LIST */
+
+#reviewsList{
+list-style:none;
+padding:0;
+margin-top:20px;
+}
+
+#reviewsList li{
+background:#061a3a;
+padding:12px;
+margin-bottom:10px;
+border-radius:6px;
+color:#d6deef;
+text-align:left;
+}
+
+/* REVIEW MESSAGE */
+
+#reviewMessage{
+margin-top:10px;
+font-size:14px;
+color:#cfd6e6;
+}
+
+/* ANIMATION */
+
+@keyframes fadeIn{
+from{opacity:0; transform:translateY(10px);}
+to{opacity:1; transform:translateY(0);}
+}
+
+/* MOBILE */
+
+@media (max-width:768px){
+
+#guess-number-container{
+margin:20px 12px;
+padding:25px 20px;
+}
+
+#guessBtn,
+#resetBtn,
+#reviewBtn{
+width:100%;
+}
+
+}
