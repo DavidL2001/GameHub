@@ -2,6 +2,7 @@
 
 let playerScore = 0;
 let computerScore = 0;
+let sessionWins = 0; // Räkna wins i sessionen för achievement milestones
 const choices = ["rock", "paper", "scissors"];
 const gameId = 2; // Rock Paper Scissors ID
 const token = localStorage.getItem("token");
@@ -75,13 +76,22 @@ function playerMove(choice) {
   
   if (result === "win") {
     playerScore++;
-    // Visa användarnamnet när de vinner
+    sessionWins++; // Räkna vita i sessionen
     statusEl.textContent = `${playerName} wins this round!`;
-    // Vi sparar inte 1 per runda längre, utan matchens slutpoäng.
-    unlockAchievement(6, "First Win RPS"); // First Win RPS (ID 6)
+    
+    // Check achievement milestones
+    if (sessionWins === 1) {
+      unlockAchievement(9, "First Win RPS"); // ID 9
+    }
+    if (sessionWins === 5) {
+      unlockAchievement(11, "RPS Champion (5)"); // ID 11
+    }
+    if (sessionWins === 10) {
+      unlockAchievement(12, "RPS Champion (10)"); // ID 12
+    }
   } else if (result === "lose") {
     computerScore++;
-    // Visa användarnamnet även när de förlorar
+    sessionWins = 0; // Nollställ streak vid förlust
     statusEl.textContent = `${playerName} loses this round!`;
   } else {
     statusEl.textContent = "It's a draw!";
@@ -98,8 +108,7 @@ function resetGame() {
   }
 
   playerScore = 0;
-  computerScore = 0;
-  resultEl.innerHTML = "";
+  computerScore = 0;  sessionWins = 0; // Nollställ streak för ny match  
   // Visa användarnamnet när spelet nollställs
   statusEl.textContent = `${playerName}, choose your move`;
   updateScoreDisplay();
