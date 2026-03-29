@@ -11,6 +11,7 @@ let gameActive = true;
 let playerWins = 0;
 let computerWins = 0;
 let lastSavedSessionScore = 0;
+let sessionWins = 0; // Räkna wins i sessionen för achievement milestones
 
 // Game ID för Tic Tac Toe
 const gameId = 1;
@@ -121,11 +122,22 @@ function checkResult() {
       // Bara spelaren (X) får spara poäng - datorn (O) sparar inget
       if (currentPlayer === "X") {
         playerWins++;
-        // Vi skickar inte alltid 1 längre, utan sparar sessionens slutpoäng senare.
-        unlockAchievement(4, "First Win TTT"); // First Win TTT (ID 4)
+        sessionWins++; // Räkna vita i sessionen
+        
+        // Check achievement milestones
+        if (sessionWins === 1) {
+          unlockAchievement(5, "First Win TTT"); // ID 5
+        }
+        if (sessionWins === 5) {
+          unlockAchievement(7, "TTT Champion (5)"); // ID 7
+        }
+        if (sessionWins === 10) {
+          unlockAchievement(8, "TTT Champion (10)"); // ID 8
+        }
       } else {
         // Datorn (O) vann - spara inte något för spelaren
         computerWins++;
+        sessionWins = 0; // Nollställ streak vid datorns vinst
       }
       
       updateWinCounter();  // Uppdatera räknaren på skärmen
@@ -136,15 +148,16 @@ function checkResult() {
 }
 
 function resetGame() {
-  // Spara aktuell sessionspoäng om den blivit bättre än senaste sparade.
-  if (playerWins > lastSavedSessionScore) {
-    logScore(playerWins);
-    lastSavedSessionScore = playerWins;
-  }
+  // Sparar poäng endast när man lämnar sidan (beforeunload event)
+  // if (playerWins > lastSavedSessionScore) {
+  //   logScore(playerWins);
+  //   lastSavedSessionScore = playerWins;
+  // }
 
   board = ["", "", "", "", "", "", "", "", ""];
   gameActive = true;
   currentPlayer = "X";
+  sessionWins = 0; // Nollställ streak för ny match
 
   // Rensa rutorna i HTML
   document.querySelectorAll(".cell").forEach((cell) => (cell.textContent = ""));
