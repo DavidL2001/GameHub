@@ -38,7 +38,7 @@ button.addEventListener("click", () => {
   }
   attempts++;
   if (attempts === 1){
-    unlockAchievement(2, "First Guess"); // First Guess Achievement (KOLLA ATT DET ÄR RÄTT ID I DB)
+    unlockAchievement(1, "First Guess"); // First Guess Achievement har ID 1
   }
   if (guess === numberToGuess) {
     feedback.textContent = "🎉 Correct!";
@@ -47,10 +47,13 @@ button.addEventListener("click", () => {
     resetBtn.style.display = "block";
     button.disabled = true;
     if (attempts <= 3) {
-  unlockAchievement(3, "Lucky Guess"); // Lucky Guess Achievement (KOLLA ATT DET ÄR RÄTT ID I DB)
+  unlockAchievement(2, "Lucky Guess"); // Lucky Guess Achievement har ID 2
+}
+if (attempts >= 5) {
+  unlockAchievement(3, "Persistent"); // Persistent Achievement har ID 3
 }
 if (attempts >= 10) {
-  unlockAchievement(4, "Persistent"); // Persistent Achievement (KOLLA ATT DET ÄR RÄTT ID I DB)
+  unlockAchievement(4, "Guess Master (10)"); // Guess Master (10) Achievement har ID 4
 }
   } else if (guess < numberToGuess) {
     feedback.textContent = "Too low ⬇️";
@@ -72,7 +75,7 @@ const handleWin = async (attempts) => {
         Authorization: `Bearer ${token}`
       },
       body: JSON.stringify({
-        game_id: 3, // SE TILL ATT NI HAR RÄTT ID HÄR FRÅN DATABASEN (Guess The Number)
+        game_id: 2, // ID 2
         score: score
       })
     });
@@ -180,7 +183,7 @@ reviewBtn.addEventListener("click", async () => {
         Authorization: `Bearer ${token}`
       },
       body: JSON.stringify({
-        game_id: 3, // SE TILL ATT NI HAR RÄTT ID HÄR FRÅN DATABASEN (Guess The Number)
+        game_id: 2, // ID 2
         rating: rating,
         comment: comment
       })
@@ -202,7 +205,7 @@ reviewBtn.addEventListener("click", async () => {
 // GET Reviews
 const fetchReviews = async () => {
   try {
-    const response = await fetch("http://localhost:3000/reviews/game/3"); // SE TILL ATT NI HAR RÄTT ID HÄR FRÅN DATABASEN (Guess The Number)
+    const response = await fetch("http://localhost:3000/reviews/game/2"); // ID 2
     const data = await response.json();
     displayReviews(data);
   } catch (err) {
