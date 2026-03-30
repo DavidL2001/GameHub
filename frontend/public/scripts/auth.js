@@ -98,6 +98,8 @@ form.addEventListener("submit", async (e) => {
         usernameInput.style.display = "none";
         toggleBtn.textContent = "Register";
         document.getElementById("formTitle").textContent = "Login";
+        submitBtn.textContent = "Login";
+        toggleText.textContent = "Don't have an account?";
       }
       // Errors
     } else {
