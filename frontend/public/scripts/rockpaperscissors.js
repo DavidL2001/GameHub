@@ -3,8 +3,9 @@
 let playerScore = 0;
 let computerScore = 0;
 let sessionWins = 0; // Räkna wins i sessionen för achievement milestones
+let roundsPlayed = 0;
 const choices = ["rock", "paper", "scissors"];
-const gameId = 2; // Rock Paper Scissors ID
+const gameId = 3; // Rock Paper Scissors ID
 const token = localStorage.getItem("token");
 
 // Hämta användarnamnet från localStorage (sparades vid inloggning)
@@ -67,6 +68,7 @@ function updateScoreDisplay() {
 
 // Spela en runda
 function playerMove(choice) {
+  roundsPlayed++;
   const computerChoice = getComputerChoice();
   const result = determineWinner(choice, computerChoice);
   
@@ -82,6 +84,9 @@ function playerMove(choice) {
     // Check achievement milestones
     if (sessionWins === 1) {
       unlockAchievement(9, "First Win RPS"); // ID 9
+    }
+    if (sessionWins === 1 && roundsPlayed <= 3) {
+      unlockAchievement(10, "Quick Win RPS"); // ID 10
     }
     if (sessionWins === 5) {
       unlockAchievement(11, "RPS Champion (5)"); // ID 11
@@ -108,7 +113,9 @@ function resetGame() {
   }
 
   playerScore = 0;
-  computerScore = 0;  sessionWins = 0; // Nollställ streak för ny match  
+  computerScore = 0;
+  sessionWins = 0; // Nollställ streak för ny match
+  roundsPlayed = 0;  
   // Visa användarnamnet när spelet nollställs
   statusEl.textContent = `${playerName}, choose your move`;
   updateScoreDisplay();
@@ -124,14 +131,9 @@ window.addEventListener("beforeunload", () => {
 // Skicka poäng till leaderboard
 async function logScore(score) {
   const userId = localStorage.getItem("userId");
-  const gameId = 2; // Rock Paper Scissors har ID 2
-
-  console.log("logScore anropades med score:", score); // DEBUG
-  console.log("userId från localStorage:", userId); // DEBUG
-  console.log("token från localStorage:", localStorage.getItem("token")); // DEBUG
+  const gameId = 3; // Rock Paper Scissors har ID 3
 
   if (!userId) {
-    console.log("User not logged in - score not saved");
     return;
   }
 
@@ -148,16 +150,6 @@ async function logScore(score) {
         score: score
       })
     });
-
-    console.log("API response status:", response.status); // DEBUG
-    const responseData = await response.json();
-    console.log("API response data:", responseData); // DEBUG
-
-    if (response.ok) {
-      console.log("Score saved!");
-    } else {
-      console.error("Failed to save score");
-    }
   } catch (error) {
     console.error("Error:", error);
   }
@@ -255,20 +247,6 @@ const deleteReview = async (id) => {
   fetchReviews();
 };
 window.deleteReview = deleteReview;
-
-// Redigera Review UPPDATERAD
-const editReview = (id, oldComment, oldRating) => {
-  const newComment = prompt("Edit comment:", oldComment);
-  let newRating = prompt("Edit rating (1-5):", oldRating);
-  if (!newComment || !newRating) return;
-  newRating = Number(newRating);
-  // Validation, stoppar användaren från att lägga till mer än 5 stjärnor/mindre än 1 stjärna
-  if (isNaN(newRating) || newRating < 1 || newRating > 5) {
-    alert("Rating must be between 1 and 5");
-    return;
-  }
-  updateReview(id, newComment, newRating);
-};
 
 // Funktioner för att redigera, spara review eller avbryta
 const startEdit = (id) => {

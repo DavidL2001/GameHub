@@ -65,10 +65,11 @@ VALUES ('Dice', 'Roll two dice to try your luck', 12);
 /* Achievements till Guess the Number Game (ID 1-4) */
 /* Standardiserade achievements für alla spel - Noshin */
 INSERT INTO achievements (name, description) VALUES
+
 ('First Guess', 'Play your first Guess The Number game'),
-('Quick Guess', 'Win in 3 attempts or less'),
-('Guess Master (5)', 'Win 5 Guess The Number games'),
-('Guess Master (10)', 'Win 10 Guess The Number games');
+('Lucky Guess', 'Win in 3 attempts or less'),
+('Persistent', 'Win in 5+ attempts'),
+('Guess Master (10)', 'Win in 10+ attempts');
 
 /* Achievements till Tic Tac Toe (ID 5-8) */
 INSERT INTO achievements (name, description) VALUES
@@ -81,8 +82,8 @@ INSERT INTO achievements (name, description) VALUES
 INSERT INTO achievements (name, description) VALUES
 ('First Win RPS', 'Win your first Rock Paper Scissors game'),
 ('Quick Win RPS', 'Win in first 3 rounds'),
-('RPS Champion (5)', 'Win 5 Rock Paper Scissors games'),
-('RPS Champion (10)', 'Win 10 Rock Paper Scissors games');
+('RPS Champion (5)', 'Win 5 times in a row'),
+('RPS Champion (10)', 'Win 10 times in a row');
 
 /* Achievements till Dice (ID 13-15) */
 INSERT INTO achievements (name, description) VALUES

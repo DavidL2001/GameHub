@@ -110,6 +110,25 @@ function makeMove(cellIndex) {
   // Byt spelare
   currentPlayer = currentPlayer === "X" ? "O" : "X";
   updateStatus();
+  
+  // Datorn väljer sitt drag automatiskt
+  if (currentPlayer === "O" && gameActive) {
+    computerMove();
+  }
+}
+
+function computerMove() {
+  const emptySquares = [];
+  for (let i = 0; i < board.length; i++) {
+    if (board[i] === "") {
+      emptySquares.push(i);
+    }
+  }
+  
+  if (emptySquares.length === 0) return;
+  
+  const randomCell = emptySquares[Math.floor(Math.random() * emptySquares.length)];
+  setTimeout(() => makeMove(randomCell), 500);
 }
 
 function checkResult() {
@@ -141,6 +160,7 @@ function checkResult() {
       }
       
       updateWinCounter();  // Uppdatera räknaren på skärmen
+      setTimeout(() => resetGame(), 2000);
       return true;
     }
   }
@@ -148,16 +168,9 @@ function checkResult() {
 }
 
 function resetGame() {
-  // Sparar poäng endast när man lämnar sidan (beforeunload event)
-  // if (playerWins > lastSavedSessionScore) {
-  //   logScore(playerWins);
-  //   lastSavedSessionScore = playerWins;
-  // }
-
   board = ["", "", "", "", "", "", "", "", ""];
   gameActive = true;
   currentPlayer = "X";
-  sessionWins = 0; // Nollställ streak för ny match
 
   // Rensa rutorna i HTML
   document.querySelectorAll(".cell").forEach((cell) => (cell.textContent = ""));
@@ -176,12 +189,10 @@ window.addEventListener("beforeunload", () => {
 
 
 async function logScore(score) {
-  // Hämta user info från localStorage 
   const userId = localStorage.getItem("userId");
-  const gameId = 1; 
+  const gameId = 1;
 
   if (!userId) {
-    console.log("User not logged in - score not saved");
     return;
   }
 
@@ -198,12 +209,6 @@ async function logScore(score) {
         score: score
       })
     });
-
-    if (response.ok) {
-      console.log("Score saved!");
-    } else {
-      console.error("Failed to save score");
-    }
   } catch (error) {
     console.error("Error:", error);
   }
@@ -376,20 +381,6 @@ const deleteReview = async (id) => {
   fetchReviews();
 };
 window.deleteReview = deleteReview;
-
-// Redigera Review UPPDATERAD
-const editReview = (id, oldComment, oldRating) => {
-  const newComment = prompt("Edit comment:", oldComment);
-  let newRating = prompt("Edit rating (1-5):", oldRating);
-  if (!newComment || !newRating) return;
-  newRating = Number(newRating);
-  // Validation, stoppar användaren från att lägga till mer än 5 stjärnor/mindre än 1 stjärna
-  if (isNaN(newRating) || newRating < 1 || newRating > 5) {
-    alert("Rating must be between 1 and 5");
-    return;
-  }
-  updateReview(id, newComment, newRating);
-};
 
 // Funktioner för att redigera, spara review eller avbryta
 const startEdit = (id) => {

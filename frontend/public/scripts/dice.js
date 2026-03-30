@@ -25,14 +25,14 @@ rollBtn.addEventListener("click", () => {
   saveScore(total);
   //Achievements
 if (!hasRolled) {
-    unlockAchievement(9, "First Roll"); // First Roll Achievement (KOLLA ATT DET ÄR RÄTT ID I DB)
+    unlockAchievement(13, "First Roll"); // First Roll Achievement har ID 13
     hasRolled = true;
   }
   if (total >= 12) {
-    unlockAchievement(10, "Seeing Double"); // Seeing Double Achievement (KOLLA ATT DET ÄR RÄTT ID I DB)
+    unlockAchievement(14, "Seeing Double"); // Seeing Double Achievement har ID 14
   }
   if (total === 2) {
-    unlockAchievement(11, "Unlucky"); // Unlucky Achievement (KOLLA ATT DET ÄR RÄTT ID I DB)
+    unlockAchievement(15, "Unlucky"); // Unlucky Achievement har id 15
   }
 });
 
