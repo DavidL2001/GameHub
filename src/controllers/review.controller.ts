@@ -1,7 +1,8 @@
 import { Request, Response } from "express";
 import * as reviewService from "../services/review.service";
+import { AuthRequest } from "../types/authRequest";
 
-//Definerar req.params.id - "!" (non null assertion operator) funkade inte
+//Definerar req.params.id 
 interface ReviewParams {
   id: string;
 }
@@ -9,7 +10,7 @@ interface ReviewParams {
 //1. Secured - Måste vara inloggad för att skapa en review
 export const createReview = async (req: Request, res: Response) => {
   try {
-    const userId = (req as any).user.id;
+    const userId = (req as AuthRequest).user.id;
     const { game_id, rating, comment } = req.body;
     const review = await reviewService.createReview(
       userId,
@@ -42,13 +43,20 @@ export const getReviewById = async (req: Request<ReviewParams>, res: Response) =
     res.status(500).json({ message: "Review not found" });
   }
 };
-//4.
+//4. Uppdaterad för edit/update review
 export const updateReview = async (req: Request<ReviewParams>, res: Response) => {
   try {
-    const review = await reviewService.updateReview(req.params.id, req.body);
+    const { comment, rating } = req.body;
+    const review = await reviewService.updateReview(
+      req.params.id,
+      comment,
+      rating
+    );
     res.json(review);
-  } catch (error) {
-    res.status(500).json({ message: "Failed to update review" });
+  } catch (error: any) {
+    res.status(400).json({
+      message: error.message
+    });
   }
 };
 //5.
